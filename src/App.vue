@@ -3,6 +3,7 @@
     <div class="app-container flex flex-column">
       <Nav/>
       <div class="app flex flex-column">
+        <BillModel/>
         <router-view />
       </div>
     </div>
@@ -11,9 +12,11 @@
 </template>
 <script>
 import Nav from './components/Nav';
+import BillModel from './components/BillModel';
 export default{
   components:{
     Nav,
+    BillModel,
   }
 }
 </script>
