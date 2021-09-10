@@ -1,9 +1,7 @@
 <template>
-    <header class=" flex">
-        <div class="content flex">
+   <div>
             <img src="@/assets/file-invoice-dollar-solid.png"/>
         </div>
-    </header>
 </template>
 
 <script>
@@ -35,10 +33,10 @@ header {
         width:100%;
     } 
 }
-
-img{
-    width: auto;
-    height: 25px;
 }
+img{
+    width: 49%;
+    height: auto;
+    margin: 70% 0 0 70%;
 }
 </style>
