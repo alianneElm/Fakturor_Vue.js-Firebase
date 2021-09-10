@@ -49,24 +49,30 @@ export default{
 button,
 .button {
   cursor: pointer;
-  padding: 16px 24px;
-  border-radius: 30px;
+  padding: 10px 20px;
+  border-radius: 40px;
   border: none;
   font-size: 12px;
+  font-weight: 700;
   margin-right: 8px;
-  color: rgb(158, 197, 17);
+  color: rgb(176, 219, 56);
+  box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .dark-purple {
-  background-color: #af1212;
+  background-color: rgba(195, 245, 79, 0.945);
+  color: green;
+  box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .red {
-  background-color: #ec5757;
+  background-color: #f50d0db0;
 }
 
 .purple {
-  background-color: #f55dfa;
+  background-color: rgba(6, 48, 23, 0.945);
+  color: rgb(23, 214, 39);
+  box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .green {

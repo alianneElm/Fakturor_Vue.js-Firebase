@@ -68,6 +68,7 @@ export default {
       .button, .filter{
         align-items: center;
         color: #fff;
+        box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
         span{
           font-size: 10px;
@@ -80,6 +81,7 @@ export default {
         cursor: pointer;
         position: relative;
         margin-right: 80px;
+        box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
         span, img{
           pointer-events: none;
@@ -97,6 +99,7 @@ export default {
           list-style: none;
           background-color: rgba(37, 82, 26, 0.336);
           border-radius: 10px;
+          box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
           li{
             cursor: pointer;
@@ -125,9 +128,11 @@ export default {
           align-items: center;
           justify-content: center;
           background-color: rgba(173, 199, 183, 0.979);
+          color:rgb(184, 29, 184);
           img{
             width: 10px;
             height:10px;
+            
             
           }
 
