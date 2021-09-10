@@ -118,6 +118,7 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
 export default {
     name:"billModel",
       data() {
@@ -146,6 +147,13 @@ export default {
       invoiceItemList: [],
       invoiceTotal: 0,
     };
+  },
+  methods: {
+    ...mapMutations(['TOGGLE_BILL']),
+
+    cancelBill(){
+      this.TOGGLE_BILL();
+    },
   },
 }
 </script>

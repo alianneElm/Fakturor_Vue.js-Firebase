@@ -3,7 +3,7 @@
     <div class="app-container flex flex-column">
       <Nav/>
       <div class="app flex flex-column">
-        <BillModel/>
+        <transition name="bill"><BillModel v-if="billModel"/></transition>
         <router-view />
       </div>
     </div>
@@ -13,11 +13,18 @@
 <script>
 import Nav from './components/Nav';
 import BillModel from './components/BillModel';
+import { mapState } from 'vuex';
 export default{
   components:{
     Nav,
     BillModel,
-  }
+  },
+  methods:{
+
+  },
+  computed:{
+    ...mapState(["billModel"])
+    }
 }
 </script>
 
@@ -44,6 +51,13 @@ export default{
     flex:1;
     position:relative;
   }
+}
+
+.bill-enter-active, .bill-leave-active {
+  transition: 1s ease all;
+}
+.bill-enter-from, .bill-leave-to{
+  transform: translateX(-700px);
 }
 
 button,

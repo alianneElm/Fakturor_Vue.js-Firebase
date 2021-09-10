@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   name: "Home",
 
@@ -40,8 +41,10 @@ export default {
   components: {},
 
   methods: {
-    newBill(){
+    ...mapMutations(['TOGGLE_BILL']),
 
+    newBill(){
+      this.TOGGLE_BILL();
     },
     filterMenuFunction(){
       this.filterMenu = !this.filterMenu;
