@@ -81,7 +81,7 @@
             </div>
             <div class="work-items">
               <h3>Artiklar</h3>
-              <table class="items-list">
+              <table class="item-list">
                 <tr class="table-heading flex">
                   <th class="item-name">Artikelnamn</th>
                   <th class="qty">Kvantitet</th>
@@ -92,7 +92,7 @@
                   <td class="item-name"><input type="text" v-model="item.name"></td>
                   <td class="qty"><input type="text" v-model="item.qty"></td>
                   <td class="price"><input type="text" v-model="item.price"></td>
-                  <td class="total flex">${{item.total = item.qty * item.price}}</td>
+                  <td class="total flex">{{item.total = item.qty * item.price}} kr</td>
                   <img @click="deleteArticle(item.id)" src="@/assets/icon-delete.svg" alt="">
                 </tr>
               </table>
@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import {uid} from 'uid';
 import {mapMutations} from "vuex";
 export default {
     name:"billModel",
@@ -159,6 +160,21 @@ export default {
 
     cancelBill(){
       this.TOGGLE_BILL();
+    },
+
+    addItem(){
+      this.invoiceItemList.push({
+        id: uid(),
+        itemName: "",
+        qty: "",
+        price: 0,
+        total: 0,
+      });
+    },
+
+    deleteArticle(id){
+      this.invoiceItemList = this.invoiceItemList.filter(item => item.id !== id)
+
     },
   },
   watch: {
@@ -230,10 +246,9 @@ export default {
         .item-list {
           width: 100%;
           // Item Table Styling
-          .table-heading,
-          .table-items {
+          .table-heading, .table-items {
             gap: 16px;
-            font-size: 12px;
+            font-size: 10px;
             .item-name {
               flex-basis: 50%;
             }
