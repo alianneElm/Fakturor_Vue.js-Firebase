@@ -25,11 +25,15 @@
       </div> 
       
     </div>
+    <div class="">
+      <Invoice v-for="(invoice, index) in invoiceData" :invoice="invoice" :key="index"/>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import Invoice from '../components/Invoice';
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "Home",
 
@@ -38,7 +42,9 @@ export default {
       filterMenu: null,
       }
   },
-  components: {},
+  components: {
+    Invoice,
+  },
 
   methods: {
     ...mapMutations(['TOGGLE_BILL']),
@@ -50,8 +56,11 @@ export default {
       this.filterMenu = !this.filterMenu;
     },
   },
-}
 
+  computed: {
+    ...mapState(['invoiceData'])
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -116,7 +125,6 @@ export default {
               font-weight: 400;
             }
           }
-
         }
       }
       .button{
@@ -131,17 +139,13 @@ export default {
           align-items: center;
           justify-content: center;
           background-color: rgba(173, 199, 183, 0.979);
-          color:rgb(184, 29, 184);
+          color:rgb(29, 184, 29);
           img{
             width: 10px;
             height:10px;
-            
-            
           }
-
         }
       }
-
     }
   }
 }

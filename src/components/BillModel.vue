@@ -106,11 +106,11 @@
 
           <div class="save flex">
             <div class="left">
-              <button @click="cancelBill" class="red">Avbryt</button>
+              <button type="button" @click="cancelBill" class="red">Avbryt</button>
             </div>
              <div class="right flex">
-              <button @click="saveDraft" class="purple">Spara utkast</button>
-               <button @click="createNewBill" class="dark-purple">Skapa faktura</button>
+              <button type="submit" @click="saveDraft" class="purple">Spara utkast</button>
+               <button type="submit" @click="createNewBill" class="dark-purple">Skapa faktura</button>
             </div>
 
           </div>
@@ -302,7 +302,7 @@ export default {
       .work-items {
         .item-list {
           width: 100%;
-          // Item Table Styling
+    
           .table-heading, .table-items {
             gap: 16px;
             font-size: 10px;

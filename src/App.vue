@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="invoicesLoaded">
     <div class="app-container flex flex-column">
       <Nav/>
       <div class="app flex flex-column">
@@ -13,17 +13,20 @@
 <script>
 import Nav from './components/Nav';
 import BillModel from './components/BillModel';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 export default{
   components:{
     Nav,
     BillModel,
   },
+  created () {
+    this.GET_INVOICES();
+  },
   methods:{
-
+    ...mapActions(['GET_INVOICES']),
   },
   computed:{
-    ...mapState(["billModel"])
+    ...mapState(["billModel", "invoicesLoaded"])
     }
 }
 </script>
@@ -36,7 +39,7 @@ export default{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Besley', serif;//'Barlow Condensed', sans-serif;
+  font-family: 'Besley', serif;
 }
 
 .app-container {
@@ -60,8 +63,7 @@ export default{
   transform: translateX(-700px);
 }
 
-button,
-.button {
+button, .button {
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 40px;
@@ -97,8 +99,6 @@ button,
   background-color: #ff8f00;
 }
 
-// utility classes
-
 .flex {
   display: flex;
 }
@@ -122,8 +122,6 @@ button,
   text-decoration: none;
   color: initial;
 }
-
-// Status Button Styling
 
 .status-button {
   &::before {
@@ -150,10 +148,10 @@ button,
 
 .pending {
   &::before {
-    background-color: #ff8f00;
+    background-color: #fbff00;
   }
-  color: #ff8f00;
-  background-color: rgba(255, 145, 0, 0.1);
+  color: #fbff00;
+  background-color: rgba(255, 251, 0, 0.185);
 }
 
 .draft {
