@@ -76,7 +76,7 @@ button, .button {
 }
 
 .dark-purple {
-  background-color: rgba(195, 245, 79, 0.945);
+  background-color: rgba(173, 211, 70, 0.945);
   color: green;
   box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }

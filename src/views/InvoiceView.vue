@@ -1,7 +1,7 @@
 <template>
   <div v-if="currentInvoice" class="invoice-view container">
     <router-link class="nav-link flex" :to="{ name: 'Home' }">
-      <img src="@/assets/icon-arrow-left.svg" alt="" /> Go Back
+      <img src="@/assets/icon-arrow-left.svg" alt="" /> Tillbaka
     </router-link>
     <!-- Header -->
     <div class="header flex">
@@ -15,23 +15,23 @@
             pending: currentInvoice.invoicePending,
           }"
         >
-          <span v-if="currentInvoice.invoicePaid">Paid</span>
-          <span v-if="currentInvoice.invoiceDraft">Draft</span>
-          <span v-if="currentInvoice.invoicePending">Pending</span>
+          <span v-if="currentInvoice.invoicePaid">Betald</span>
+          <span v-if="currentInvoice.invoiceDraft">Utkast</span>
+          <span v-if="currentInvoice.invoicePending">Utestående</span>
         </div>
       </div>
       <div class="right flex">
-        <button @click="toggleEditInvoice" class="dark-purple">Edit</button>
-        <button @click="deleteInvoice(currentInvoice.docId)" class="red">Delete</button>
+        <button @click="toggleEditInvoice" class="dark-purple">Redigera</button>
+        <button @click="deleteInvoice(currentInvoice.docId)" class="red">Radera</button>
         <button @click="updateStatusToPaid(currentInvoice.docId)" v-if="currentInvoice.invoicePending" class="green">
-          Mark as Paid
+          Markera som Betald
         </button>
         <button
           v-if="currentInvoice.invoiceDraft || currentInvoice.invoicePaid"
           @click="updateStatusToPending(currentInvoice.docId)"
           class="orange"
         >
-          Mark as Pending
+          Markera som Utestående
         </button>
       </div>
     </div>
@@ -52,17 +52,17 @@
       </div>
       <div class="middle flex">
         <div class="payment flex flex-column">
-          <h4>Invoice Date</h4>
+          <h4>Datum</h4>
           <p>
             {{ currentInvoice.invoiceDate }}
           </p>
-          <h4>Payment Date</h4>
+          <h4>Betalnings datum</h4>
           <p>
             {{ currentInvoice.paymentDueDate }}
           </p>
         </div>
         <div class="bill flex flex-column">
-          <h4>Bill To</h4>
+          <h4>Faktura till</h4>
           <p>{{ currentInvoice.clientName }}</p>
           <p>{{ currentInvoice.clientStreetAddress }}</p>
           <p>{{ currentInvoice.clientCity }}</p>
@@ -70,16 +70,16 @@
           <p>{{ currentInvoice.clientCountry }}</p>
         </div>
         <div class="send-to flex flex-column">
-          <h4>Sent To</h4>
+          <h4>Skicka till</h4>
           <p>{{ currentInvoice.clientEmail }}</p>
         </div>
       </div>
       <div class="bottom flex flex-column">
         <div class="billing-items">
           <div class="heading flex">
-            <p>Item Name</p>
-            <p>QTY</p>
-            <p>Price</p>
+            <p>Artiklar</p>
+            <p>Kvantitet</p>
+            <p>Pris</p>
             <p>Total</p>
           </div>
           <div v-for="(item, index) in currentInvoice.invoiceItemList" :key="index" class="item flex">
@@ -90,8 +90,8 @@
           </div>
         </div>
         <div class="total flex">
-          <p>Amount Due</p>
-          <p>{{ currentInvoice.invoiceTotal }}</p>
+          <p>Total att betala</p>
+          <p>{{ currentInvoice.invoiceTotal }}kr</p>
         </div>
       </div>
     </div>
@@ -160,7 +160,7 @@ export default {
   }
   .header,
   .invoice-details {
-    background-color: #890a8d;
+    background-color: #175a1c;
     border-radius: 20px;
   }
   .header {
@@ -254,7 +254,8 @@ export default {
       .billing-items {
         padding: 32px;
         border-radius: 20px 20px 0 0;
-        background-color: #2deb56;
+        background-color: #11441c;
+         box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         .heading {
           color: #dfe3fa;
           font-size: 12px;
@@ -288,9 +289,10 @@ export default {
       .total {
         color: #fff;
         padding: 32px;
-        background-color: rgba(83, 193, 236, 0.7);
+        background-color: rgba(61, 189, 72, 0.644);
         align-items: center;
         border-radius: 0 0 20px 20px;
+        box-shadow: 10px 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         p {
           flex: 1;
           font-size: 12px;

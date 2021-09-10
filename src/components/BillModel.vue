@@ -89,7 +89,7 @@
                   <th class="total">Total</th>
                 </tr>
                 <tr class="table-items flex" v-for="(item, index) in invoiceItemList" :key="index">
-                  <td class="item-name"><input type="text" v-model="item.name"></td>
+                  <td class="item-name"><input type="text" v-model="item.itemName"></td>
                   <td class="qty"><input type="text" v-model="item.qty"></td>
                   <td class="price"><input type="text" v-model="item.price"></td>
                   <td class="total flex">{{item.total = item.qty * item.price}} kr</td>
