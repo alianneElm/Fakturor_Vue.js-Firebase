@@ -60,7 +60,7 @@ export default{
   transition: 1s ease all;
 }
 .bill-enter-from, .bill-leave-to{
-  transform: translateX(-700px);
+  transform: translateX(-900px);
 }
 
 button, .button {

@@ -255,7 +255,7 @@ export default {
     display: none;
   }
   @media (min-width: 900px) {
-    left: 90px;
+    left: 15px;
   }
   .invoice-content {
     position: relative;
