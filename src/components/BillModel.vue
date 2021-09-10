@@ -62,7 +62,7 @@
                 <input disabled type="text" id="invoiceDate" v-model="invoiceDate">
               </div>
               <div class="input flex flex-column">
-                <label for="paymentDueDate">Betalning</label>
+                <label for="paymentDueDate">Betalnings datum</label>
                 <input disabled type="text" id="paymentDueDate" v-model="paymentDueDate">
               </div>
 
@@ -72,6 +72,7 @@
                 <select required type="text" id="paymentTerms" v-model="paymentTerms">
                   <option value="30">30 dagar</option>
                   <option value="60">60 dagar</option>
+                  <option value="90">90 dagar</option>
                 </select>
             </div>
             <div class="input flex flex-column">
@@ -123,7 +124,7 @@ export default {
     name:"billModel",
       data() {
     return {
-      dateOptions: { year: "numeric", month: "short", day: "numeric" },
+      dateOptions: { year: "numeric", month: "numeric", day: "numeric" },
       docId: null,
       loading: null,
       billerStreetAddress: null,
@@ -148,6 +149,11 @@ export default {
       invoiceTotal: 0,
     };
   },
+  created() {
+    this.invoiceDateUnix = Date.now();
+    this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString('fr-CA', this.dateOptions);
+
+  },
   methods: {
     ...mapMutations(['TOGGLE_BILL']),
 
@@ -155,6 +161,13 @@ export default {
       this.TOGGLE_BILL();
     },
   },
+  watch: {
+    paymentTerms(){
+      let paymentDate= new Date();
+      this.paymentDueDateUnix = paymentDate.setDate(paymentDate.getDate() + Number(this.paymentTerms));
+      this.paymentDueDate = new Date(this.paymentDueDateUnix).toLocaleDateString('fr-CA', this.dateOptions)
+    },
+  }
 }
 </script>
 <style lang="scss" scoped>
