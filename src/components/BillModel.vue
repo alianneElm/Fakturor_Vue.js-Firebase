@@ -259,6 +259,8 @@ export default {
       })
     
         this.TOGGLE_BILL();
+
+        this.GET_INVOICES();
     },
 
     async updateInvoice(){
@@ -293,8 +295,6 @@ export default {
             docId : this.docId,
             routeId: this.$route.params.invoideId,
           }
-
-
         this.UPDATE_INVOICE(data);
     },
 

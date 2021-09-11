@@ -12,6 +12,23 @@ export default createStore({
 
   },
   mutations: {
+    UPDATE_STATUS_TO_PAID(state, payload) {
+      state.invoiceData.forEach((invoice) => {
+        if (invoice.docId === payload) {
+          invoice.invoicePaid = true;
+          invoice.invoicePending = false;
+        }
+      });
+    },
+    UPDATE_STATUS_TO_PENDING(state, payload) {
+      state.invoiceData.forEach((invoice) => {
+        if (invoice.docId === payload) {
+          invoice.invoicePaid = false;
+          invoice.invoicePending = true;
+          invoice.invoiceDraft = false;
+        }
+      });
+    },
     TOGGLE_BILL(state){
       state.billModel = !state.billModel;
     },
@@ -35,6 +52,23 @@ export default createStore({
     },
   },
   actions: {
+    async UPDATE_STATUS_TO_PAID({ commit }, docId) {
+      const getInvoice = db.collection("invoices").doc(docId);
+      await getInvoice.update({
+        invoicePaid: true,
+        invoicePending: false,
+      });
+      commit("UPDATE_STATUS_TO_PAID", docId);
+    },
+    async UPDATE_STATUS_TO_PENDING({ commit }, docId) {
+      const getInvoice = db.collection("invoices").doc(docId);
+      await getInvoice.update({
+        invoicePaid: false,
+        invoicePending: true,
+        invoiceDraft: false,
+      });
+      commit("UPDATE_STATUS_TO_PENDING", docId);
+    },
     async GET_INVOICES({ commit, state }) {
       const getData = db.collection("invoices");
       const results = await getData.get();

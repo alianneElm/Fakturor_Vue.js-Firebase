@@ -8,7 +8,6 @@
       </div>
     </div>
   </div>
-  <router-view />
 </template>
 <script>
 import Nav from './components/Nav';
@@ -92,11 +91,11 @@ button, .button {
 }
 
 .green {
-  background-color: #33d69f;
+  background-color: #1b9239;
 }
 
 .orange {
-  background-color: #ff8f00;
+  background-color: #0d4206;
 }
 
 .flex {
@@ -156,9 +155,9 @@ button, .button {
 
 .draft {
   &::before {
-    background-color: #dfe3fa;
+    background-color: #f5961a;
   }
   color: #dfe3fa;
-  background-color: rgba(223, 227, 250, 0.1);
+  background-color: rgba(226, 65, 37, 0.384);
 }
 </style>
