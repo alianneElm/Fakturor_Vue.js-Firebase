@@ -7,6 +7,8 @@ export default createStore({
     billModel : null,
     invoicesLoaded: null,
     currentInvoiceArray:null,
+    editInvoice: null,
+
 
   },
   mutations: {
@@ -24,7 +26,13 @@ export default createStore({
       state.currentInvoiceArray = state.invoiceData.filter((invoice)=>{
         return invoice.invoiceId ===payload;
       })
-    }
+    },
+    TOGGLE_EDIT_INVOICE(state){
+      state.editInvoice = !state.editInvoice;
+    },
+    DELETE_INVOICE(state, payload){
+      state.invoiceData= state.invoiceData.filter(invoice => invoice.docId !== payload);
+    },
   },
   actions: {
     async GET_INVOICES({ commit, state }) {
@@ -62,6 +70,15 @@ export default createStore({
       });
       commit("INVOICES_LOADED");
     },
+
+    async UPDATE_INVOICE({commit, dispatch}, {docId, routeId}){
+      commit('DELETE_INVOICE', docId);
+      await dispatch ('GET_INVOICES');
+      commit('TOGGLE_BILL');
+      commit('TOGGLE_EDIT_INVOICE');
+      commit('SET_CURRENT_INVOICE', routeId);
+
+    }
   },
   modules: {
   }

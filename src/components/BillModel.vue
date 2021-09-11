@@ -1,7 +1,8 @@
 <template>
   <div @click="checkClick" ref="invoiceWrap" class="invoice-wrap flex flex-column">
       <form @submit.prevent="submitForm"  class="invoice-content">
-          <h1>Ny Faktura</h1>
+          <h1 v-if="!editInvoice">Ny Faktura</h1>
+          <h1 v-else>Redigera Faktura</h1>
           <div class="bill-from flex flex-column">
                 <h4>Faktura från</h4>
                 <div class="input flex flex-column">
@@ -109,8 +110,9 @@
               <button type="button" @click="cancelBill" class="red">Avbryt</button>
             </div>
              <div class="right flex">
-              <button type="submit" @click="saveDraft" class="purple">Spara utkast</button>
-               <button type="submit" @click="createNewBill" class="dark-purple">Skapa faktura</button>
+              <button v-if="!editInvoice" type="submit" @click="saveDraft" class="purple">Spara utkast</button>
+               <button v-if="!editInvoice" type="submit" @click="createNewBill" class="dark-purple">Skapa faktura</button>
+              <button v-if="editInvoice" type="submit" @click="updateBill" class="dark-purple">Spara ändringar</button> 
             </div>
 
           </div>
@@ -121,7 +123,7 @@
 <script>
 import db from "../firebase/firebaseInit";
 import {uid} from 'uid';
-import {mapMutations} from "vuex";
+import {mapMutations, mapState, mapActions} from "vuex";
 export default {
     name:"billModel",
       data() {
@@ -151,15 +153,44 @@ export default {
     };
   },
   created() {
-    this.invoiceDateUnix = Date.now();
-    this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString('fr-CA', this.dateOptions);
-
+    if(!this.editInvoice){
+      this.invoiceDateUnix = Date.now();
+      this.invoiceDate = new Date(this.invoiceDateUnix).toLocaleDateString('fr-CA', this.dateOptions);
+    }
+     if (this.editInvoice) {
+      const currentInvoice = this.currentInvoiceArray[0];
+      this.docId = currentInvoice.docId;
+      this.billerStreetAddress = currentInvoice.billerStreetAddress;
+      this.billerCity = currentInvoice.billerCity;
+      this.billerZipCode = currentInvoice.billerZipCode;
+      this.billerCountry = currentInvoice.billerCountry;
+      this.clientName = currentInvoice.clientName;
+      this.clientEmail = currentInvoice.clientEmail;
+      this.clientStreetAddress = currentInvoice.clientStreetAddress;
+      this.clientCity = currentInvoice.clientCity;
+      this.clientZipCode = currentInvoice.clientZipCode;
+      this.clientCountry = currentInvoice.clientCountry;
+      this.invoiceDateUnix = currentInvoice.invoiceDateUnix;
+      this.invoiceDate = currentInvoice.invoiceDate;
+      this.paymentTerms = currentInvoice.paymentTerms;
+      this.paymentDueDateUnix = currentInvoice.paymentDueDateUnix;
+      this.paymentDueDate = currentInvoice.paymentDueDate;
+      this.productDescription = currentInvoice.productDescription;
+      this.invoicePending = currentInvoice.invoicePending;
+      this.invoiceDraft = currentInvoice.invoiceDraft;
+      this.invoiceItemList = currentInvoice.invoiceItemList;
+      this.invoiceTotal = currentInvoice.invoiceTotal;
+    }
   },
   methods: {
-    ...mapMutations(['TOGGLE_BILL']),
+    ...mapMutations(['TOGGLE_BILL', "TOGGLE_EDIT_INVOICE"]),
+    ...mapActions(['UPDATE_INVOICE']),
 
     cancelBill(){
       this.TOGGLE_BILL();
+      if(this.editInvoice){
+        this.TOGGLE_EDIT_INVOICE();
+      }
     },
 
     addItem(){
@@ -198,11 +229,11 @@ export default {
         return;
       }
 
-      this.calcTheTotal();
+        this.calcTheTotal();
 
-      const dataBase = db.collection('invoices').doc(); 
+        const dataBase = db.collection('invoices').doc(); 
 
-      await dataBase.set({
+        await dataBase.set({
           invoiceId: uid(6),
         billerStreetAddress: this.billerStreetAddress,
         billerCity: this.billerCity,
@@ -227,12 +258,56 @@ export default {
         invoicePaid: null,
       })
     
-    this.TOGGLE_BILL();
+        this.TOGGLE_BILL();
+    },
+
+    async updateInvoice(){
+      if(this.invoiceItemList.length <= 0){
+        alert('Ingen artikel har lagts till på fakturan!')
+        return;
+      }
+
+        this.calcTheTotal();
+
+        const dataBase = db.collection('invoices').doc(this.docId); 
+          await dataBase.update({
+        billerStreetAddress: this.billerStreetAddress,
+        billerCity: this.billerCity,
+        billerZipCode: this.billerZipCode,
+        billerCountry: this.billerCountry,
+        clientName: this.clientName,
+        clientEmail: this.clientEmail,
+        clientStreetAddress: this.clientStreetAddress,
+        clientCity: this.clientCity,
+        clientZipCode: this.clientZipCode,
+        clientCountry: this.clientCountry,
+        paymentTerms: this.paymentTerms,
+        paymentDueDate: this.paymentDueDate,
+        paymentDueDateUnix: this.paymentDueDateUnix,
+        productDescription: this.productDescription,
+        invoiceItemList: this.invoiceItemList,
+        invoiceTotal: this.invoiceTotal,
+      });
+
+          const data={
+            docId : this.docId,
+            routeId: this.$route.params.invoideId,
+          }
+
+
+        this.UPDATE_INVOICE(data);
     },
 
     submitForm(){
+      if(this.editInvoice){
+        this.updateInvoice();
+        return;
+      }
       this.uploadInvoice();
     }
+  },
+  computed: {
+    ...mapState(['editInvoice', 'currentInvoiceArray']),
   },
   watch: {
     paymentTerms(){
